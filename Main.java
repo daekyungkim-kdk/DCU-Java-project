@@ -270,7 +270,7 @@ public class Main {
 
         while (true) {
             System.out.println("\n==================================");
-            System.out.println("   ✨ 4세대 신오지방 완벽 도감 ✨");
+            System.out.println("   ✨ 4세대 포켓몬 신오도감 ✨");
             System.out.println("==================================");
             System.out.println("1. 전체 도감 보기 (1번 ~ 210번)");
             System.out.println("2. 특정 타입별 포켓몬 나열하기");
