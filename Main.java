@@ -346,7 +346,7 @@ public class Main {
                     System.out.print("\n💾 파일로 내보낼 타입을 입력하세요: ");
                     String fileType = scanner.nextLine().trim();
 
-                    // [추가된 유효성 검사] 파일 저장 시에도 잘못된 타입 차단
+                    // 파일 저장 시에도 잘못된 타입 차단
                     if (!fileType.equals("노말") && !fileType.equals("불꽃") && !fileType.equals("물") &&
                             !fileType.equals("풀") && !fileType.equals("전기") && !fileType.equals("얼음") &&
                             !fileType.equals("격투") && !fileType.equals("독") && !fileType.equals("땅") &&
