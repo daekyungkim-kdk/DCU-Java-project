@@ -1,3 +1,4 @@
+//포켓몬 4세대 신오도감 프로그램
 package project;
 
 import java.io.BufferedWriter;
