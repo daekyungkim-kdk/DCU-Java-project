@@ -3,8 +3,6 @@ package project;
 
 import javax.swing.*;
 import java.awt.*;
-
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -53,7 +51,6 @@ class Pokemon {
 }
 
 // 2. 메인 실행 클래스
-
 public class Main extends JFrame {
 
     private JTextArea displayArea;
@@ -280,6 +277,9 @@ public class Main extends JFrame {
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        // 창에 전체적인 여백
+        ((JPanel)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setLayout(new BorderLayout(10, 10));
 
         Image icon = new ImageIcon(getClass().getResource("/PokeBall.jpg")).getImage();
@@ -288,7 +288,7 @@ public class Main extends JFrame {
         JPanel topPanel = new JPanel(new GridLayout(2, 1, 5, 5));
 
         JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
-        inputPanel.add(new JLabel(" 👉 검색어(타입 또는 이름) 입력: "), BorderLayout.WEST);
+        inputPanel.add(new JLabel(" 👉 검색(타입 또는 이름) 입력: "), BorderLayout.WEST);
         inputField = new JTextField();
         inputPanel.add(inputField, BorderLayout.CENTER);
         topPanel.add(inputPanel);
@@ -305,12 +305,17 @@ public class Main extends JFrame {
         buttonPanel.add(btnSave);
         topPanel.add(buttonPanel);
 
+        topPanel.setBackground(new Color(220, 53, 69));
+        inputPanel.setOpaque(false); // 배경색이 잘 보이게 투명 처리
+        buttonPanel.setOpaque(false);
+
         add(topPanel, BorderLayout.NORTH);
 
         // 결과 출력창
         displayArea = new JTextArea();
         displayArea.setEditable(false);
-        displayArea.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+        displayArea.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+        displayArea.setBackground(new Color(245, 248, 250));
         JScrollPane scrollPane = new JScrollPane(displayArea);
         add(scrollPane, BorderLayout.CENTER);
         // 화면 UI
@@ -320,9 +325,9 @@ public class Main extends JFrame {
         btnAll.addActionListener(e -> {
             displayArea.setText("\n📜 [4세대 신오 도감 전체 목록]\n");
             for (Pokemon p : sinnohDex) {
-                // [GUI 추가됨] System.out.println 대신 GUI 텍스트창에 이어붙이기(append)
                 displayArea.append(p.getInfo() + "\n");
             }
+            displayArea.setCaretPosition(0);
         });
 
         // 2번: 특정 타입별 포켓몬 나열하기
@@ -338,8 +343,7 @@ public class Main extends JFrame {
                     !searchType.equals("바위") && !searchType.equals("고스트") && !searchType.equals("드래곤") &&
                     !searchType.equals("강철") && !searchType.equals("악")) {
 
-                // 콘솔 대신 텍스트 영역에 에러 출력 후 break 대신 return으로 중단
-                displayArea.setText("❌ 오류: '" + searchType + "'은(는) 존재하지 않는 포켓몬 타입입니다. 올바르게 입력해주세요.\n");
+                JOptionPane.showMessageDialog(this, "존재하지 않는 포켓몬 타입입니다!", "입력 오류", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -352,6 +356,7 @@ public class Main extends JFrame {
                 }
             }
             displayArea.append("총 " + count + "마리가 검색되었습니다.\n");
+            displayArea.setCaretPosition(0);
         });
 
         // 3번: 포켓몬 이름으로 검색하기 🔍
@@ -406,7 +411,6 @@ public class Main extends JFrame {
                 writer.write("======================================\n");
                 writer.write("총 " + fileCount + "마리의 포켓몬이 기록되었습니다.\n");
 
-                // [GUI 추가됨] System.out.println 대신 GUI 출력
                 displayArea.setText("💾 '" + fileName + "' 파일이 성공적으로 생성되었습니다!\n");
             } catch (IOException ex) {
                 displayArea.setText("❌ 파일 저장 중 오류가 발생했습니다: " + ex.getMessage() + "\n");
@@ -415,6 +419,13 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
+        // ui 꾸미기
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         SwingUtilities.invokeLater(() -> {
             new Main().setVisible(true); // 창을 화면에 띄움
         });
