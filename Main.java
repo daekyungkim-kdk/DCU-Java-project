@@ -1,12 +1,15 @@
 //포켓몬 4세대 신오도감 프로그램
 package project;
 
+import javax.swing.*;
+import java.awt.*;
+
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 // 1. 포켓몬 기본 클래스
 
@@ -51,12 +54,16 @@ class Pokemon {
 
 // 2. 메인 실행 클래스
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<Pokemon> sinnohDex = new ArrayList<>();
+public class Main extends JFrame {
 
-        // --- 4세대 신오 도감 데이터 삽입 ---
+    private JTextArea displayArea;
+    private JTextField inputField;
+    private List<Pokemon> sinnohDex;
+
+    public Main() {
+        sinnohDex = new ArrayList<>();
+
+        // 4세대 신오 도감 데이터 삽입
         sinnohDex.add(new Pokemon(1, "모부기", "풀"));
         sinnohDex.add(new Pokemon(2, "수풀부기", "풀"));
         sinnohDex.add(new Pokemon(3, "토대부기", "풀", "땅"));
@@ -254,7 +261,7 @@ public class Main {
         sinnohDex.add(new Pokemon(195, "스라크", "벌레", "비행"));
         sinnohDex.add(new Pokemon(196, "핫삼", "벌레", "강철"));
         sinnohDex.add(new Pokemon(197, "에레키드", "전기"));
-        sinnohDex.add(new Pokemon(198, "エレーブ 에레브", "전기"));
+        sinnohDex.add(new Pokemon(198, "에레브", "전기"));
         sinnohDex.add(new Pokemon(199, "에레키블", "전기"));
         sinnohDex.add(new Pokemon(200, "마그비", "불꽃"));
         sinnohDex.add(new Pokemon(201, "마그마", "불꽃"));
@@ -268,121 +275,148 @@ public class Main {
         sinnohDex.add(new Pokemon(209, "앱솔", "악"));
         sinnohDex.add(new Pokemon(210, "기라티나", "고스트", "드래곤"));
 
-        while (true) {
-            System.out.println("\n==================================");
-            System.out.println("   ✨ 4세대 포켓몬 신오도감 ✨");
-            System.out.println("==================================");
-            System.out.println("1. 전체 도감 보기 (1번 ~ 210번)");
-            System.out.println("2. 특정 타입별 포켓몬 나열하기");
-            System.out.println("3. 포켓몬 이름으로 검색하기 🔍");
-            System.out.println("4. 검색한 타입 리스트 파일로 저장하기");
-            System.out.println("0. 프로그램 종료");
-            System.out.print("👉 메뉴 선택: ");
+        // GUI 추가됨
+        setTitle("✨ 4세대 포켓몬 신오도감 ✨");
+        setSize(600, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(10, 10));
 
-            int menu = scanner.nextInt();
-            scanner.nextLine(); // 버퍼 비우기
+        Image icon = new ImageIcon(getClass().getResource("/PokeBall.jpg")).getImage();
+        setIconImage(icon);
 
-            if (menu == 0) {
-                System.out.println("👋 도감 프로그램을 종료합니다.");
-                break;
+        JPanel topPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+
+        JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
+        inputPanel.add(new JLabel(" 👉 검색어(타입 또는 이름) 입력: "), BorderLayout.WEST);
+        inputField = new JTextField();
+        inputPanel.add(inputField, BorderLayout.CENTER);
+        topPanel.add(inputPanel);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JButton btnAll = new JButton("1. 전체 도감");
+        JButton btnType = new JButton("2. 타입 검색");
+        JButton btnName = new JButton("3. 이름 검색");
+        JButton btnSave = new JButton("4. 파일 저장");
+
+        buttonPanel.add(btnAll);
+        buttonPanel.add(btnType);
+        buttonPanel.add(btnName);
+        buttonPanel.add(btnSave);
+        topPanel.add(buttonPanel);
+
+        add(topPanel, BorderLayout.NORTH);
+
+        // 결과 출력창 
+        displayArea = new JTextArea();
+        displayArea.setEditable(false);
+        displayArea.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+        JScrollPane scrollPane = new JScrollPane(displayArea);
+        add(scrollPane, BorderLayout.CENTER);
+        // 화면 UI 
+        
+
+        // 1번: 전체 도감 보기
+        btnAll.addActionListener(e -> {
+            displayArea.setText("\n📜 [4세대 신오 도감 전체 목록]\n");
+            for (Pokemon p : sinnohDex) {
+                // [GUI 추가됨] System.out.println 대신 GUI 텍스트창에 이어붙이기(append)
+                displayArea.append(p.getInfo() + "\n");
+            }
+        });
+
+        // 2번: 특정 타입별 포켓몬 나열하기
+        btnType.addActionListener(e -> {
+            // [GUI 추가됨] scanner.nextLine() 대신 입력칸(inputField)의 텍스트를 가져옴
+            String searchType = inputField.getText().trim();
+
+            // 입력한 타입이 존재하는 타입인지 확인
+            if (!searchType.equals("노말") && !searchType.equals("불꽃") && !searchType.equals("물") &&
+                    !searchType.equals("풀") && !searchType.equals("전기") && !searchType.equals("얼음") &&
+                    !searchType.equals("격투") && !searchType.equals("독") && !searchType.equals("땅") &&
+                    !searchType.equals("비행") && !searchType.equals("에스퍼") && !searchType.equals("벌레") &&
+                    !searchType.equals("바위") && !searchType.equals("고스트") && !searchType.equals("드래곤") &&
+                    !searchType.equals("강철") && !searchType.equals("악")) {
+
+                // 콘솔 대신 텍스트 영역에 에러 출력 후 break 대신 return으로 중단
+                displayArea.setText("❌ 오류: '" + searchType + "'은(는) 존재하지 않는 포켓몬 타입입니다. 올바르게 입력해주세요.\n");
+                return;
             }
 
-            switch (menu) {
-                case 1:
-                    System.out.println("\n📜 [4세대 신오 도감 전체 목록]");
-                    for (Pokemon p : sinnohDex) {
-                        System.out.println(p.getInfo());
-                    }
-                    break;
-
-                case 2:
-                    System.out.print("\n🔍 검색할 타입을 입력하세요 (예: 풀, 불꽃, 물, 땅, 격투, 비행, 고스트, 드래곤): ");
-                    String searchType = scanner.nextLine().trim();
-
-                    // [추가된 유효성 검사] 입력한 타입이 존재하는 타입인지 확인
-                    if (!searchType.equals("노말") && !searchType.equals("불꽃") && !searchType.equals("물") &&
-                            !searchType.equals("풀") && !searchType.equals("전기") && !searchType.equals("얼음") &&
-                            !searchType.equals("격투") && !searchType.equals("독") && !searchType.equals("땅") &&
-                            !searchType.equals("비행") && !searchType.equals("에스퍼") && !searchType.equals("벌레") &&
-                            !searchType.equals("바위") && !searchType.equals("고스트") && !searchType.equals("드래곤") &&
-                            !searchType.equals("강철") && !searchType.equals("악")) {
-
-                        System.out.println("❌ 오류: '" + searchType + "'은(는) 존재하지 않는 포켓몬 타입입니다. 올바르게 입력해주세요.");
-                        break; // 올바르지 않으면 아래 반복문을 돌지 않고 메뉴로 빠져나감
-                    }
-
-                    System.out.println("\n🎯 [" + searchType + " 타입 포켓몬 목록]");
-                    int count = 0;
-                    for (Pokemon p : sinnohDex) {
-                        if (p.hasType(searchType)) {
-                            System.out.println(p.getInfo());
-                            count++;
-                        }
-                    }
-                    System.out.println("총 " + count + "마리가 검색되었습니다.");
-                    break;
-
-                case 3: // 이름으로 개별 검색 기능 구현 완료!
-                    System.out.print("\n🔍 정보를 찾을 포켓몬 이름을 입력하세요 (예: 초염몽, 한카리아스): ");
-                    String searchName = scanner.nextLine().trim();
-
-                    boolean found = false;
-                    for (Pokemon p : sinnohDex) {
-                        // 대소문자나 앞뒤 공백 무시하고 정확히 이름이 일치하는지 비교
-                        if (p.getName().equalsIgnoreCase(searchName)) {
-                            System.out.println("\n🔎 [검색 결과 발견!]");
-                            System.out.println("================================");
-                            System.out.println(p.getInfo());
-                            System.out.println("================================");
-                            found = true;
-                            break; // 찾았으면 반복문 탈출
-                        }
-                    }
-                    if (!found) {
-                        System.out.println("❌ 오류: '" + searchName + "'은(는) 도감에 등록되지 않은 포켓몬입니다.");
-                    }
-                    break;
-
-                case 4:
-                    System.out.print("\n💾 파일로 내보낼 타입을 입력하세요: ");
-                    String fileType = scanner.nextLine().trim();
-
-                    // 파일 저장 시에도 잘못된 타입 차단
-                    if (!fileType.equals("노말") && !fileType.equals("불꽃") && !fileType.equals("물") &&
-                            !fileType.equals("풀") && !fileType.equals("전기") && !fileType.equals("얼음") &&
-                            !fileType.equals("격투") && !fileType.equals("독") && !fileType.equals("땅") &&
-                            !fileType.equals("비행") && !fileType.equals("에스퍼") && !fileType.equals("벌레") &&
-                            !fileType.equals("바위") && !fileType.equals("고스트") && !fileType.equals("드래곤") &&
-                            !fileType.equals("강철") && !fileType.equals("악")) {
-
-                        System.out.println("❌ 오류: '" + fileType + "'은(는) 존재하지 않는 포켓몬 타입이므로 파일을 생성할 수 없습니다.");
-                        break;
-                    }
-
-                    String fileName = fileType + "_type_pokemon.txt";
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-                        writer.write("====== " + fileType + " 타입 4세대 포켓몬 리스트 ======\n");
-
-                        int fileCount = 0;
-                        for (Pokemon p : sinnohDex) {
-                            if (p.hasType(fileType)) {
-                                writer.write(p.getInfo() + "\n");
-                                fileCount++;
-                            }
-                        }
-                        writer.write("======================================\n");
-                        writer.write("총 " + fileCount + "마리의 포켓몬이 기록되었습니다.\n");
-
-                        System.out.println("💾 '" + fileName + "' 파일이 성공적으로 생성되었습니다!");
-                    } catch (IOException e) {
-                        System.out.println("❌ 파일 저장 중 오류가 발생했습니다: " + e.getMessage());
-                    }
-                    break;
-
-                default:
-                    System.out.println("❌ 올바른 메뉴 번호를 입력해주세요.");
+            displayArea.setText("\n🎯 [" + searchType + " 타입 포켓몬 목록]\n");
+            int count = 0;
+            for (Pokemon p : sinnohDex) {
+                if (p.hasType(searchType)) {
+                    displayArea.append(p.getInfo() + "\n");
+                    count++;
+                }
             }
-        }
-        scanner.close();
+            displayArea.append("총 " + count + "마리가 검색되었습니다.\n");
+        });
+
+        // 3번: 포켓몬 이름으로 검색하기 🔍
+        // 이름으로 개별 검색 기능 구현 완료
+        btnName.addActionListener(e -> {
+            String searchName = inputField.getText().trim();
+            boolean found = false;
+
+            for (Pokemon p : sinnohDex) {
+                // 이름 일치하는지 비교
+                if (p.getName().equalsIgnoreCase(searchName)) {
+                    displayArea.setText("\n🔎 [검색 결과 발견!]\n");
+                    displayArea.append("================================\n");
+                    displayArea.append(p.getInfo() + "\n");
+                    displayArea.append("================================\n");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                displayArea.setText("❌ 오류: '" + searchName + "'은(는) 도감에 등록되지 않은 포켓몬입니다.\n");
+            }
+        });
+
+        // 4번: 검색한 타입 리스트 파일로 저장하기
+        btnSave.addActionListener(e -> {
+            String fileType = inputField.getText().trim();
+
+            // 파일 저장 시에도 잘못된 타입 차단
+            if (!fileType.equals("노말") && !fileType.equals("불꽃") && !fileType.equals("물") &&
+                    !fileType.equals("풀") && !fileType.equals("전기") && !fileType.equals("얼음") &&
+                    !fileType.equals("격투") && !fileType.equals("독") && !fileType.equals("땅") &&
+                    !fileType.equals("비행") && !fileType.equals("에스퍼") && !fileType.equals("벌레") &&
+                    !fileType.equals("바위") && !fileType.equals("고스트") && !fileType.equals("드래곤") &&
+                    !fileType.equals("강철") && !fileType.equals("악")) {
+                
+                displayArea.setText("❌ 오류: '" + fileType + "'은(는) 존재하지 않는 포켓몬 타입이므로 파일을 생성할 수 없습니다.\n");
+                return;
+            }
+
+            String fileName = fileType + "_type_pokemon.txt";
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+                writer.write("====== " + fileType + " 타입 4세대 포켓몬 리스트 ======\n");
+
+                int fileCount = 0;
+                for (Pokemon p : sinnohDex) {
+                    if (p.hasType(fileType)) {
+                        writer.write(p.getInfo() + "\n");
+                        fileCount++;
+                    }
+                }
+                writer.write("======================================\n");
+                writer.write("총 " + fileCount + "마리의 포켓몬이 기록되었습니다.\n");
+
+                // [GUI 추가됨] System.out.println 대신 GUI 출력
+                displayArea.setText("💾 '" + fileName + "' 파일이 성공적으로 생성되었습니다!\n");
+            } catch (IOException ex) {
+                displayArea.setText("❌ 파일 저장 중 오류가 발생했습니다: " + ex.getMessage() + "\n");
+            }
+        });
+    }
+    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new Main().setVisible(true); // 창을 화면에 띄움
+        });
     }
 }
