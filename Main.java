@@ -307,14 +307,14 @@ public class Main extends JFrame {
 
         add(topPanel, BorderLayout.NORTH);
 
-        // 결과 출력창 
+        // 결과 출력창
         displayArea = new JTextArea();
         displayArea.setEditable(false);
         displayArea.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
         JScrollPane scrollPane = new JScrollPane(displayArea);
         add(scrollPane, BorderLayout.CENTER);
-        // 화면 UI 
-        
+        // 화면 UI
+
 
         // 1번: 전체 도감 보기
         btnAll.addActionListener(e -> {
@@ -387,7 +387,7 @@ public class Main extends JFrame {
                     !fileType.equals("비행") && !fileType.equals("에스퍼") && !fileType.equals("벌레") &&
                     !fileType.equals("바위") && !fileType.equals("고스트") && !fileType.equals("드래곤") &&
                     !fileType.equals("강철") && !fileType.equals("악")) {
-                
+
                 displayArea.setText("❌ 오류: '" + fileType + "'은(는) 존재하지 않는 포켓몬 타입이므로 파일을 생성할 수 없습니다.\n");
                 return;
             }
@@ -413,7 +413,7 @@ public class Main extends JFrame {
             }
         });
     }
-    
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new Main().setVisible(true); // 창을 화면에 띄움
