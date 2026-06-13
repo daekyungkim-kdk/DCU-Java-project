@@ -22,8 +22,7 @@
 * **4번 메뉴**: 검색한 타입 리스트 파일로 저장 (메모장 파일(예: `물_type_pokemon.txt`)로 내보내기)
 
 ## 프로그램 구동 영상
-https://github.com/user-attachments/assets/278b370a-9d4b-4957-a494-12332972be42
-
+https://github.com/user-attachments/assets/7011baaa-b498-4f92-a403-20e925a0c25b
 
 ## 데이터 참고 출처
 * 본 프로그램의 4세대 포켓몬 데이터(도감 번호, 이름, 속성 배열)는 공식 신오도감 체계를 따르고 있으며, 검증된 도감 사이트인 **포딕 의 4세대 신오도감 목록 (https://podic.kr/Gen4/mon_list_num-sinoh2.html) 을 참고하여 정확하게 구축되었습니다.
