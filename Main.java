@@ -285,13 +285,39 @@ public class Main extends JFrame {
         Image icon = new ImageIcon(getClass().getResource("/PokeBall.jpg")).getImage();
         setIconImage(icon);
 
-        JPanel topPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+        JPanel topPanel = new JPanel(new GridLayout(3, 1, 5, 5));
 
-        JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
+        JPanel inputPanel = new JPanel(new BorderLayout(7, 7));
         inputPanel.add(new JLabel(" 👉 검색(타입 또는 이름) 입력: "), BorderLayout.WEST);
         inputField = new JTextField();
         inputPanel.add(inputField, BorderLayout.CENTER);
         topPanel.add(inputPanel);
+
+        JPanel examplePanel = new JPanel(new GridLayout(2, 1));
+        JLabel typeEx = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;💡 타입 : "
+                + "<font color='#F0F0D0'>노말</font> "
+                + "<font color='#FF8080'>격투</font> "
+                + "<font color='#D0C0FF'>비행</font> "
+                + "<font color='#FF90FF'>독</font> "
+                + "<font color='#FFE090'>땅</font> "
+                + "<font color='#E0D080'>바위</font> "
+                + "<font color='#D8E070'>벌레</font> "
+                + "<font color='#D0B0FF'>고스트</font> "
+                + "<font color='#E0E0F0'>강철</font> "
+                + "<font color='#FFA070'>불꽃</font> "
+                + "<font color='#90C0FF'>물</font> "
+                + "<font color='#A0E090'>풀</font> "
+                + "<font color='#FFF070'>전기</font> "
+                + "<font color='#FF80A0'>에스퍼</font> "
+                + "<font color='#B0FFFF'>얼음</font> "
+                + "<font color='#A080FF'>드래곤</font> "
+                + "<font color='#B09080'>악</font></html>");
+        JLabel nameEx = new JLabel("      💡 포켓몬 예시 : 팽도리, 불꽃숭이");
+
+        examplePanel.add(typeEx);
+        examplePanel.add(nameEx);
+        examplePanel.setOpaque(false);
+        topPanel.add(examplePanel);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton btnAll = new JButton("1. 전체 도감");
@@ -332,8 +358,12 @@ public class Main extends JFrame {
 
         // 2번: 특정 타입별 포켓몬 나열하기
         btnType.addActionListener(e -> {
-            // [GUI 추가됨] scanner.nextLine() 대신 입력칸(inputField)의 텍스트를 가져옴
             String searchType = inputField.getText().trim();
+
+            if (searchType.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "타입/포켓몬 이름을 입력해주세요!! \n (타입 예:불꽃, 땅) \n (포켓몬 예:팽도리,불꽃숭이)", "입력 오류", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             // 입력한 타입이 존재하는 타입인지 확인
             if (!searchType.equals("노말") && !searchType.equals("불꽃") && !searchType.equals("물") &&
