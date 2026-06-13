@@ -31,7 +31,7 @@ https://github.com/user-attachments/assets/7011baaa-b498-4f92-a403-20e925a0c25b
 ### 실행 가이드 (중요)
 1. 깃허브에서 다운로드한 `Main.java`와 `PokeBall.jpg` 파일을 사용하시는 IDE(IntelliJ 또는 Eclipse) 프로젝트의 **`src` 폴더 안**에 나란히 함께 넣어줍니다.
 2. `Main.java` 코드 맨 상단의 `package project;` 선언에 맞춰, 패키지 폴더명이 **`project`**로 지정되어 있는지 확인합니다.
-3. 준비가 완료되면 `Main.java`를 실행(Run)합니다.
+3. 준비가 완료되면 `Main.java`를 실행합니다.
 
 ### 포함 파일
 * `Main.java` - 도감 데이터 구축 및 Swing GUI 메인 소스 코드
