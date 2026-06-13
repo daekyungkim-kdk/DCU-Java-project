@@ -25,5 +25,5 @@
 https://github.com/user-attachments/assets/278b370a-9d4b-4957-a494-12332972be42
 
 
-## 데이터 참고 출처 (References
+## 데이터 참고 출처
 * 본 프로그램의 4세대 포켓몬 데이터(도감 번호, 이름, 속성 배열)는 공식 신오도감 체계를 따르고 있으며, 검증된 도감 사이트인 **포딕 의 4세대 신오도감 목록 (https://podic.kr/Gen4/mon_list_num-sinoh2.html) 을 참고하여 정확하게 구축되었습니다.
