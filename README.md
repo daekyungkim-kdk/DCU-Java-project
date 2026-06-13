@@ -9,7 +9,7 @@
 2. `Main.java` 코드 맨 상단의 `package project;` 선언에 맞춰, 패키지 폴더명이 **`project`**로 지정되어 있는지 확인합니다.
 3. 준비가 완료되면 `Main.java`를 실행(Run)합니다.
 
-### 📂 포함 파일
+### 포함 파일
 * `Main.java` - 도감 데이터 구축 및 Swing GUI 메인 소스 코드
 * `PokeBall.jpg` - 창 타이틀 및 작업표시줄 데코레이션 전용 그래픽 소스 파일
 
