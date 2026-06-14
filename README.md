@@ -29,10 +29,10 @@ https://github.com/user-attachments/assets/7011baaa-b498-4f92-a403-20e925a0c25b
 > **본 프로그램은 외부 이미지 자원을 동적으로 로드하므로, 빌드 시 아래의 실행 가이드를 준수해 주셔야 에러 없이 정상 구동됩니다.**
 
 ### 실행 가이드 (중요)
-1. 깃허브에서 다운로드한 `Main.java`와 `PokeBall.jpg` 파일을 사용하시는 IDE(IntelliJ 또는 Eclipse) 프로젝트의 **`src` 폴더 안**에 나란히 함께 넣어줍니다.
-**🚨 특히나 `PokeBall.jpg` 파일을 src 폴더 안에 넣지 않으면 NullPointerException 오류가 나서 작동을 안 합니다!!! 반드시 함께 넣어주세요.**
-2. `Main.java` 코드 맨 상단의 `package project;` 선언에 맞춰, 패키지 폴더명이 `project`로 지정되어 있는지 확인합니다.
-3. 준비가 완료되면 `Main.java`를 실행합니다.
+1. 본 리포지토리를 압축 파일(`ZIP`)로 다운로드하거나 클론합니다.
+2. 사용하시는 IDE(IntelliJ 또는 Eclipse)에서 압축을 푼 프로젝트 폴더를 통째로 오픈합니다.
+3. 🚨 **[중요]** 프로젝트 소스 루트인 **`src` 폴더 안에 `Main.java`와 `PokeBall.jpg` 자원이 나란히 함께 들어있는지** 확인합니다. (한 공간에 있어야 상대 경로 Stream 로더가 정상 작동하여 아이콘 오류가 나지 않습니다.)
+4. `Main.java` 코드 맨 상단의 `package project;` 선언에 맞춰, IDE 내부에서 소스가 패키지 폴더 안에 잘 바인딩되었는지 확인 후 실행(Run)합니다.
 
 
 ### 포함 파일
