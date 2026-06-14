@@ -323,7 +323,7 @@ public class Main extends JFrame {
         JButton btnAll = new JButton("1. 전체 도감");
         JButton btnType = new JButton("2. 타입 검색");
         JButton btnName = new JButton("3. 이름 검색");
-        JButton btnSave = new JButton("4. 파일 저장");
+        JButton btnSave = new JButton("4. TXT파일로 저장");
 
         buttonPanel.add(btnAll);
         buttonPanel.add(btnType);
